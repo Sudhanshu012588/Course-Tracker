@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import OwnerDash from './DashBoard/OwnerDash'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 function Login() {
   const [user, setUser] = useState({
@@ -23,14 +22,14 @@ function Login() {
     // Add your validation logic here
     if (true) { // Replace with actual validation logic
       switch (user.UserType) {
-        case 'Organizer':
-          navigate('/OwnerDash'); // Redirect to Organizer dashboard
+        case 'Admin':
+          navigate('/AdminDashboard'); // Redirect to Organizer dashboard
           break;
-        case 'Volunteer':
-          navigate('/Volunteerdash'); // Redirect to Volunteer dashboard
+        case 'Teacher':
+          navigate('/TeacherDashboard'); // Redirect to Volunteer dashboard
           break;
-        case 'Participant':
-          navigate('/Participantdash'); // Redirect to Participant dashboard
+        case 'Student':
+          navigate('/StudentDashboard'); // Redirect to Participant dashboard
           break;
         default:
           console.error('Invalid User Type');
@@ -91,7 +90,6 @@ function Login() {
             >
               <option value="Participant">Participant</option>
               <option value="Volunteer">Volunteer</option>
-              <option value="Organizer">Organizer</option>
             </select>
           </div>
 
