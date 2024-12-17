@@ -7,7 +7,7 @@ const generateToken = (id) =>{
 };
 
 export const registerUser = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password,usertype } = req.body;
   
     try {
       const userExists = await User.findOne({ email });
@@ -15,12 +15,13 @@ export const registerUser = async (req, res) => {
         return res.status(400).json({ message: "User already exists" });
       }
   
-      const user = await User.create({ username, email, password });
+      const user = await User.create({ username, email, password, usertype });
       if (user) {
         res.status(201).json({
           _id: user.id,
           username: user.username,
           email: user.email,
+          usertype: user.usertype,
           token: generateToken(user.id),
         });
       } else {
@@ -31,15 +32,16 @@ export const registerUser = async (req, res) => {
     }
   };
 export const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password,usertype } = req.body;
   
     try {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email,usertype});
       if (user && (await bcrypt.compare(password, user.password))) {
         res.json({
           _id: user.id,
           username: user.username,
           email: user.email,
+          usertype:user.usertype,
           token: generateToken(user.id),
         });
       } else {
