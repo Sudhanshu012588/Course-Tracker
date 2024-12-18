@@ -1,7 +1,9 @@
-import mongoose from "mongoose"
-import bcrypt from "bcrypt"
+// teacherModel.js
+import mongoose from 'mongoose';
+import Course from './courseModel.js';
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema({
+const teacherSchema = new Schema({
     username:{
         type:String,
         require:[true, "username is required"],
@@ -21,15 +23,15 @@ const userSchema = new mongoose.Schema({
     usertype:{
         type:String,
         lowercase:true,     
-    }
+    },
+    courses: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Course',
+        }
+      ],
 });
 
-userSchema.pre("save",async function (next) {
-    if(!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password,10);
-    next();
-});
+const Teacher = mongoose.model('Teacher', teacherSchema);
 
-const User = mongoose.model("User",userSchema);
-
-export default User;
+export default Teacher;
