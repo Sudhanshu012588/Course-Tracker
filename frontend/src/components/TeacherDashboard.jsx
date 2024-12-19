@@ -9,21 +9,26 @@ const TeacherDashboard = () => {
   const username = newusername;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState({
+    courseName:"",
+    courseCode:"",
+    credits:"",
+    instructor:"",
+    description:""
+  });
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const instructorres = await axios.post(`http://localhost:5000/api/users/courses`, { username });
-        const response = await axios.get(`http://localhost:5000/api/users/courses`);
-        setCourses(response.data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchCourses = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:5000/api/user/teacher/${username}`);
+  //       setCourses(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching courses:", error);
+  //     }
+  //   };
 
-    fetchCourses();
-  }, [username]);
+  //   fetchCourses();
+  // }, [username]); 
 
   const handleLogout = () => {
     navigate("/login");
@@ -32,12 +37,14 @@ const TeacherDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-5">
       <h1 className="text-3xl font-bold mb-4">{`${username}`}</h1>
-      <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" onClick={() => navigate('/course')}>
+      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4 mr-4" onClick={() => navigate('/course')}>
         Create Course
       </button>
-
+      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4" onClick={() => navigate('/teachercoursecard')}>
+        My Courses
+      </button>
       {/* Render Courses */}
-      {courses.length > 0 ? (
+      {/* {courses.length > 0 ? (
         <div className="grid gap-4 mt-6">
           {courses.map((course) => (
             <div key={course._id} className="bg-gray-800 p-4 rounded shadow-md">
@@ -51,12 +58,12 @@ const TeacherDashboard = () => {
         </div>
       ) : (
         <p>No courses found for this instructor.</p>
-      )}
+      )} */}
 
       {/* Logout */}
       <button
         onClick={handleLogout}
-        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded mt-6"
+        className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded mt-6 block"
       >
         Logout
       </button>

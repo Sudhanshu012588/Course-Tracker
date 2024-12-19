@@ -1,117 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { clearUsername } from "../../userSlice.js"; // Import clearUsername action
+import { clearUsername } from "../../userSlice.js";
 
-const StudentDashboard = () => {
+const TeacherDashboard = () => {
   const newusername = useSelector((state) => state.user.username); // Fetch username from Redux store
   const username = newusername;
-  const dispatch = useDispatch(); // Initialize dispatch
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [courses, setCourses] = useState({
+    courseName:"",
+    courseCode:"",
+    credits:"",
+    instructor:"",
+    description:""
+  });
 
-  const [submissionLink, setSubmissionLink] = useState("");
+  // useEffect(() => {
+  //   const fetchCourses = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:5000/api/user/teacher/${username}`);
+  //       setCourses(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching courses:", error);
+  //     }
+  //   };
 
-  // Placeholder data
-  const assignments = [
-    { id: 1, title: "Math Assignment 1", dueDate: "2024-08-10" },
-    { id: 2, title: "Science Project", dueDate: "2024-08-15" },
-  ];
+  //   fetchCourses();
+  // }, [username]); 
 
-  const notices = [
-    { id: 1, content: "Mid-semester exams start on August 20th." },
-    { id: 2, content: "Submit all assignments by their due dates." },
-  ];
-
-  const grades = [
-    { id: 1, subject: "Math", grade: "A" },
-    { id: 2, subject: "Science", grade: "B+" },
-  ];
-
-  // Submit assignment handler
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Assignment submitted: ${submissionLink}`);
-    setSubmissionLink("");
-  };
-
-  // Logout handler
   const handleLogout = () => {
-    dispatch(clearUsername()); // Clear username from Redux store
-    navigate("/login"); // Redirect to login page
+    navigate("/login");
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-5">
-      <h1 className="text-3xl font-bold mb-4">Hello, {username}</h1>
-
-      {/* View Assignments */}
-      <div className="bg-gray-800 p-4 mb-6 rounded">
-        <h2 className="text-2xl mb-3">Assignments</h2>
-        <ul>
-          {assignments.map((assignment) => (
-            <li key={assignment.id} className="mb-2">
-              <strong>{assignment.title}</strong> - Due: {assignment.dueDate}
-            </li>
+      <h1 className="text-3xl font-bold mb-4">{`${username}`}</h1>
+      
+      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4 mr-5" onClick={() => navigate('/coursecard')}>
+        My Courses
+      </button>
+      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4 mr-5" onClick={() => navigate('/registercard')}>
+        Register
+      </button>
+      {/* Render Courses */}
+      {/* {courses.length > 0 ? (
+        <div className="grid gap-4 mt-6">
+          {courses.map((course) => (
+            <div key={course._id} className="bg-gray-800 p-4 rounded shadow-md">
+              <h2 className="text-2xl font-bold mb-2">{course.courseName}</h2>
+              <p className="mb-1">Course Code: {course.courseCode}</p>
+              <p className="mb-1">Credits: {course.credits}</p>
+              <p className="mb-1">Instructor: {course.instructor}</p>
+              <p className="mb-1">Description: {course.description}</p>
+            </div>
           ))}
-        </ul>
-      </div>
-
-      {/* Submit Assignments */}
-      <div className="bg-gray-800 p-4 mb-6 rounded">
-        <h2 className="text-2xl mb-3">Submit Assignment</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="url"
-            placeholder="Paste your assignment link here"
-            value={submissionLink}
-            onChange={(e) => setSubmissionLink(e.target.value)}
-            className="w-full p-2 mb-2 rounded text-black"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-
-      {/* View Notices */}
-      <div className="bg-gray-800 p-4 mb-6 rounded">
-        <h2 className="text-2xl mb-3">Notices</h2>
-        <ul>
-          {notices.map((notice) => (
-            <li key={notice.id} className="mb-2">
-              {notice.content}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* View Grades */}
-      <div className="bg-gray-800 p-4 mb-6 rounded">
-        <h2 className="text-2xl mb-3">Grades</h2>
-        <ul>
-          {grades.map((grade) => (
-            <li key={grade.id} className="mb-2">
-              <strong>{grade.subject}</strong> - Grade: {grade.grade}
-            </li>
-          ))}
-        </ul>
-      </div>
+        </div>
+      ) : (
+        <p>No courses found for this instructor.</p>
+      )} */}
 
       {/* Logout */}
-      <div>
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
-        >
-          Logout
-        </button>
-      </div>
+      <button
+        onClick={handleLogout}
+        className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded mt-6 block"
+      >
+        Logout
+      </button>
     </div>
   );
 };
 
-export default StudentDashboard;
+export default TeacherDashboard;

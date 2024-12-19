@@ -107,13 +107,34 @@ export const CreateCourse = async (req, res) => {
   }
 };
 
-export const getAllCourses = async (req, res) => {
+// export const getAllCourses = async (req, res) => {
+//   try {
+//     const {instructor}=req.body;
+//     const courses = await Course.find({});
+//     res.status(200).json(courses);
+//   } catch (error) {
+//     res.status(500).json({ message: "Error fetching courses" });
+//   }
+// };
+
+// const Course = require('../models/Course'); // Assuming you have a Course model
+
+// Controller to fetch courses by teacher name
+export const getTeacherCourses = async (req, res) => {
+  const { teacherName } = req.body;
+
   try {
-    const {instructor}=req.body;
-    const courses = await Course.find({});
+    // Fetch courses taught by the teacher
+    const courses = await Course.find({ instructor: teacherName });
+
+    if (!courses.length) {
+      return res.status(404).json({ message: 'No courses found for this teacher.' });
+    }
+
+    // Return courses
     res.status(200).json(courses);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching courses" });
+    // Handle server error
+    res.status(500).json({ message: 'Error fetching courses', error: error.message });
   }
 };
-
