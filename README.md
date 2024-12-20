@@ -101,7 +101,7 @@ Fields include:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo.git
+   git clone https://github.com/https://github.com/Sudhanshu012588/Course-Tracker.git
    ```
 
 2. Navigate to the project directory:
