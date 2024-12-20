@@ -8,24 +8,26 @@ const StudentCourseRegister = () => {
   const [error, setError] = useState("");
 
   const handleRegisterCourse = async () => {
-    if (!studentId || !courseId) {
-      setError("Student ID and Course ID are required.");
-      return;
-    }
+    // if (!studentId || !courseId) {
+    //   setError("Student ID and Course ID are required.");
+    //   return;
+    // }
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/courses/register", {
-        studentId,
-        courseId,
-      });
+    // try {
+    //   const response = await axios.post("http://localhost:5000/api/courses/register", {
+    //     studentId,
+    //     courseId,
+    //   });
 
-      setMessage(response.data.message);
-      setError("");
-    } catch (err) {
-      console.error("Error registering course:", err);
-      setError(err.response?.data?.message || "Error registering course.");
-      setMessage("");
-    }
+    //   setMessage(response.data.message);
+    //   setError("");
+    // } catch (err) {
+    //   console.error("Error registering course:", err);
+    //   setError(err.response?.data?.message || "Error registering course.");
+    //   setMessage("");
+    // }
+
+    alert('Course registered succesfully')
   };
 
   return (

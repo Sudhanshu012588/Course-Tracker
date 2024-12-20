@@ -38,7 +38,7 @@ const TeacherDashboard = () => {
     <div className="min-h-screen bg-gray-900 text-white p-5">
       <h1 className="text-3xl font-bold mb-4">{`${username}`}</h1>
       
-      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4 mr-5" onClick={() => navigate('/coursecard')}>
+      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4 mr-5" onClick={() => navigate('/studentcoursecard')}>
         My Courses
       </button>
       <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded mt-4 mr-5" onClick={() => navigate('/registercard')}>

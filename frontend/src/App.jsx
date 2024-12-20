@@ -14,8 +14,9 @@ import StudentCourseRegister from "./components/StudentCourseRegister"
 function App() {
   return (
     <Router>
-      <Navbar />
       <Routes>
+      <Route path="/" element={<Navbar />} />
+        {/* <Navbar /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/student" element={<StudentDashboard />} />
